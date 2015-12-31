@@ -1,4 +1,5 @@
 from pprint import pprint
+from datetime import time
 
 
 class TimeTable:
@@ -46,14 +47,23 @@ class TimeTable:
     def get_short_day_name(self, day_id):
         return self.get_day_name(day_id)[:3]
 
+    def timediff(self, t2, t1):
+        return time(t2.hour - t1.hour, t2.minute - t1.minute)
+
 
     ### OBJECT INIT STUFF ###
 
     def __init__(self):
         a = self.activity.copy()
         a["name"] = "Operating Systems"
-        self.insert_activity(a, "1", "10:00", "11:00")
-        self.insert_activity(a, "6", "8:30", "9:30")
+        t1 = time(10, 0)
+        t2 = time(11, 0)
+        self.insert_activity(a, "1", t1, t2)
+        self.insert_activity(a, "6", time(8, 30), time(9, 30))
+
+        print self.timediff(t2, t1)
+
+
 
         pprint(self.thetable)
 
