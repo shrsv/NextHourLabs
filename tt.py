@@ -47,8 +47,23 @@ class TimeTable:
     def get_short_day_name(self, day_id):
         return self.get_day_name(day_id)[:3]
 
-    def timediff(self, t2, t1):
-        return time(t2.hour - t1.hour, t2.minute - t1.minute)
+    def time_diff(self, t1, t2):
+        return time(abs(t2.hour - t1.hour), abs(t2.minute - t1.minute), abs(t2.second - t2.second))
+
+    def time_total_secs(self, t):
+        return t.hour * 3600 + t.minute * 60 + t.second
+
+    def time_compare(self, t1, t2):
+        t1_secs = self.time_total_secs(t1)
+        t2_secs = self.time_total_secs(t2)
+
+        if t1_secs == t2_secs:
+            return 0
+        elif t1_secs > t2_secs:
+            return 1
+        else:
+            return -1
+
 
 
     ### OBJECT INIT STUFF ###
@@ -56,14 +71,12 @@ class TimeTable:
     def __init__(self):
         a = self.activity.copy()
         a["name"] = "Operating Systems"
-        t1 = time(10, 0)
-        t2 = time(11, 0)
+        t1 = time(12, 0)
+        t2 = time(12, 30)
         self.insert_activity(a, "1", t1, t2)
         self.insert_activity(a, "6", time(8, 30), time(9, 30))
 
-        print self.timediff(t2, t1)
-
-
+        print self.time_compare(time(12, 00), time(12, 00))
 
         pprint(self.thetable)
 
